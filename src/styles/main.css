@@ -1,0 +1,15 @@
+
+
+/* red dashed lines around parks that haven't been visited */
+.visited {
+    border: 3px dashed red;
+    margin: 5px 10px;
+    text-align: center;
+}
+
+/* red dashed lines around parks that have been visited */
+.unvisited {
+    border: 3px solid green;
+    margin: 5px 10px;
+    text-align: center;
+}
