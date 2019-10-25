@@ -1,0 +1,1 @@
+const darkSkyApi = "61fcc912898b186961a3623ab55a083d"
