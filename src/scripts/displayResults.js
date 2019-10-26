@@ -3,41 +3,49 @@
 
 
 const displayResults = () => {
-    let lat
-    let long
-    let weatherReport
+
     fetchParks()
     .then(parsedParks => {
-        let i = 0
+
         for (park of parsedParks) {
             // create new article element to be appended to body
-            lat = `${park.latitude}`
-            long = `${park.longitude}`
-
-
-
-            const newElement = document.createElement("article")
-            newElement.class = "article-park"
-            newElement.id = `parkResult${i}`
-            newElement.innerHTML = `
-            <h3>${park.name}</h3>
-            <p>${park.state}</p>
-            `
+            const lat = `${park.latitude}`
+            const long = `${park.longitude}`
+            const i = parsedParks.indexOf(park)    
 
             fetchWeather(i, lat, long)
+            .then((parsedWeather) => {
+                const newArticle = document.createElement("article")
+                newArticle.class = "article-park"
+                newArticle.id = `parkResult${i}`
+                newArticle.innerHTML = `
+                <h3>${parsedParks[i].name}</h3>
+                <p>${parsedParks[i].state}</p>
+                <p>Currently: ${parsedWeather.currently.summary} <br>
+                Today: ${parsedWeather.hourly.summary} <br>
+                Weekly weather: ${parsedWeather.daily.summary}<br>
+                </p>
+                `
 
-            i++
+                // adds class to the list of classes based on value under visited key of park object
+                if (parsedParks[i].visited === true) {
+                    newArticle.classList.add("visited")
+                } else {
+                    newArticle.classList.add("unvisited")
+                }
+                document.querySelector("body").appendChild(newArticle) 
 
-            // adds class to the list of classes based on value under visited key of park object
-            if (park.visited === true) {
-                newElement.classList.add("visited")
-            } else {
-                newElement.classList.add("unvisited")
-            }
-            document.querySelector("body").appendChild(newElement)
+            })
         }
-        })
-        }
+    })
+}
+        
+
+
+
+
+
+
 
     
 
